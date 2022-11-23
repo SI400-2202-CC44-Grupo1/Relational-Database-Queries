@@ -1,0 +1,99 @@
+Relational Database Queries
+
+-- Consulta Simple
+-- Cantidad de reseñas realizas por un usuario
+select  us.ID,count(Comentario)  as Quantity from
+             Usuario US
+inner join Resena rs on us.ID=rs.Usuario_ID
+group by us.ID
+
+-- Consultas Complejas
+
+-- Funcion que retorne el nombre del cliente según el ID de la reserva
+
+alter function f_nombre_cliente_reserva_id(@id int)returns varchar(50)
+    begin
+    declare @nombre varchar(50)
+    select @nombre = Cliente.Nombre+'  '+Cliente.DNI
+    from Cliente join Reserva R on R.ID = Cliente.ID
+    where R.ID = @id
+    return @nombre
+    end;
+print dbo.f_nombre_cliente_reserva_id(2)
+
+-- Lista de reservas ya culminadas de un usuario
+
+alter procedure sp_res_cul(@id int)
+as
+begin
+    select Salida_date,Estado,Costo from Reserva
+    inner join Cliente C on Reserva.Cliente_ID = C.ID
+    inner join Usuario Us on C.Usuario_ID = Us.ID
+    where Us.ID=@id and Estado=2;
+end
+
+exec sp_res_cul 1
+
+-- Data Utilizada 
+
+insert into Pais (ID, Nombre) values (1,'Peru')
+insert into Pais (ID, Nombre) values (2,'Chile')
+insert into Pais (ID, Nombre) values (3,'Colombia')
+insert into Pais (ID, Nombre) values (4,'Australia')
+insert into Pais (ID, Nombre) values (5,'Argentina')
+
+insert into Ciudad (ID, Nombre, Pais_ID) values (1,'Lima',1)
+insert into Ciudad (ID, Nombre, Pais_ID) values (2,'Ayacucho',1)
+insert into Ciudad (ID, Nombre, Pais_ID) values (3,'Tarapoto',1)
+insert into Ciudad (ID, Nombre, Pais_ID) values (4,'Arequipa',1)
+insert into Ciudad (ID, Nombre, Pais_ID) values (5,'Chiclayo',1)
+
+INSERT into Usuario(ID, DNI, Nombre, Apellido, Email, Edad, Genero, Telefono, Password, Ciudad_ID) values(1,74744203,'Walter','Delgado','wdelgado@gmail.com',18,'Masculino','996944981','walter123',1)
+INSERT into Usuario(ID, DNI, Nombre, Apellido, Email, Edad, Genero, Telefono, Password, Ciudad_ID) values(2,45856257,'Luisa','Andrade','Landrade@gmail.com',19,'Masculino','985784125','Andrade123',2)
+INSERT into Usuario(ID, DNI, Nombre, Apellido, Email, Edad, Genero, Telefono, Password, Ciudad_ID) values(3,12546357,'Andres','Peñaloza','Apeña@gmail.com',20,'Masculino','986578425','Andrade123',5)
+INSERT into Usuario(ID, DNI, Nombre, Apellido, Email, Edad, Genero, Telefono, Password, Ciudad_ID) values(4,85796458,'Miguel','Escudero','Mescudero@gmail.com',21,'Masculino','963582741','Andrade123',4)
+INSERT into Usuario(ID, DNI, Nombre, Apellido, Email, Edad, Genero, Telefono, Password, Ciudad_ID) values(5,89658724,'Lucas','Silva','Lsilva@gmail.com',48,'Masculino','985746321','Andrade123',3)
+INSERT into Usuario(ID, DNI, Nombre, Apellido, Email, Edad, Genero, Telefono, Password, Ciudad_ID) values(6,96857458,'Maria','Enciso','Menciso@gmail.com',38,'Masculino','985764521','Andrade123',1)
+
+insert into Cliente (ID, DNI, Nombre, Usuario_ID) values (1,'74744203','Walter',1)
+insert into Cliente (ID, DNI, Nombre, Usuario_ID) values (2,'45856257','Luisa', 2)
+insert into Cliente (ID, DNI, Nombre, Usuario_ID) values (3,'12546357','Andres',3)
+insert into Cliente (ID, DNI, Nombre, Usuario_ID) values (4,'85796458','Miguel',4)
+insert into Cliente (ID, DNI, Nombre, Usuario_ID) values (5,'89658724','Lucas',5)
+
+insert into Hotel (ID, Nombre, Direccion, Telefono, Ciudad_ID) values (1,'Hotel Pachacutec','Avenida Carlitos','999999999',1)
+insert into Hotel (ID, Nombre, Direccion, Telefono, Ciudad_ID) values (2,'Hotel Once','Avenida Doble','999999999',2)
+insert into Hotel (ID, Nombre, Direccion, Telefono, Ciudad_ID) values (3,'Hotel CherryUp','Avenida Minatozaki','999999999',3)
+insert into Hotel (ID, Nombre, Direccion, Telefono, Ciudad_ID) values (4,'Hotel The Feels','Avenida Los cristos','999999999',4)
+insert into Hotel (ID, Nombre, Direccion, Telefono, Ciudad_ID) values (5,'Hotel Hirai Momo','Avenida Andropecuante','999999999',5)
+
+Insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (1,'Me parece uno de los mejores.....',5,1,1)
+Insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (2,'Mi estadia fue placentera.....',5,2,1)
+Insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (3,'Una de las mejores experiencias.....',5,3,2)
+Insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (4,'Me agradó el amibnete.....',5,2,2)
+Insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (5,'Fue una hermosa experiencia.....',5,1,1)
+
+insert into Habitacion (ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) VALUES (1,'Personal',1,1,1,60.00,1,'Reservado',1)
+insert into Habitacion (ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) VALUES (2,'Personal',1,1,1,80.00,1,'Reservado',2)
+insert into Habitacion (ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) VALUES (3,'Personal',1,1,1,50.00,1,'Reservado',3)
+insert into Habitacion (ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) VALUES (4,'Personal',1,1,1,70.00,1,'Reservado',4)
+insert into Habitacion (ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) VALUES (5,'Personal',1,1,1,100.00,1,'Reservado',5)
+
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Costo, Habitacion_ID, Estado, Cliente_ID) VALUES (1,'2022-11-10','2022-11-15','2022-11-20',60.00,1,2,1)
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Costo, Habitacion_ID, Estado, Cliente_ID) VALUES (2,'2022-11-10','2022-11-15','2022-11-20',80.00,2,2,2)
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Costo, Habitacion_ID, Estado, Cliente_ID) VALUES (3,'2022-11-10','2022-11-15','2022-11-20',50.00,3,2,3)
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Costo, Habitacion_ID, Estado, Cliente_ID) VALUES (4,'2022-11-10','2022-11-15','2022-11-20',70.00,4,2,4)
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Costo, Habitacion_ID, Estado, Cliente_ID) VALUES (5,'2022-11-10','2022-11-15','2022-11-20',100.00,5,2,5)
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Costo, Habitacion_ID, Estado, Cliente_ID) VALUES (6,'2022-11-10','2022-11-15','2022-11-20',100.00,5,2,5)
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Costo, Habitacion_ID, Estado, Cliente_ID) VALUES (7,'2023-11-10','2023-11-15','2023-11-20',100.00,5,2,1)
+
+
+insert into App_Admin (ID, DNI, Nombre, Apellido, Rango, Password) values (1,'71206070','Nacy','Jowel','Administrador',1)
+
+
+insert into Hotel_Admin (ID, DNI, Nombre, Apellido, Rango, Hotel_ID, App_Admin_ID) VALUES (1,'71206070','Momo','Hirai','Administrador',1,1)
+insert into Hotel_Admin (ID, DNI, Nombre, Apellido, Rango, Hotel_ID, App_Admin_ID) VALUES (2,'71206071','Nayeon','Im','Administrador',2,1)
+insert into Hotel_Admin (ID, DNI, Nombre, Apellido, Rango, Hotel_ID, App_Admin_ID) VALUES (3,'71206072','Sana','Minatozaki','Administrador',3,1)
+insert into Hotel_Admin (ID, DNI, Nombre, Apellido, Rango, Hotel_ID, App_Admin_ID) VALUES (4,'71206073','Mina','Sharon','Administrador',4,1)
+insert into Hotel_Admin (ID, DNI, Nombre, Apellido, Rango, Hotel_ID, App_Admin_ID) VALUES (5,'71206074','Ji-Hio','Park','Administrador',5,1)
+
