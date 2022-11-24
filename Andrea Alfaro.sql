@@ -54,3 +54,7 @@ insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hot
 insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) values(2,'Matrimonial',1,1,1,800,2,'Ocupada',1)
 insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) values(3,'Simple',1,1,1,200,3,'Libre',1)
 insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) values(4,'Royal',1,1,1,400,3,'Libre',1)
+
+insert into Reserva (ID, Reserva_date, Llegada_date, Salida_date, Pedido_especial, Costo, Habitacion_ID, Estado, Cliente_ID) values (1,'2022-08-10','2022-08-20','2022-08-25','No', 500, 1, 1, 1)
+
+insert into Comprobante (ID, Monto, Fecha, Estado, Reserva_ID, Tipo) values (1, 500, '2022-08-10', 1, 1, 'Simple')
