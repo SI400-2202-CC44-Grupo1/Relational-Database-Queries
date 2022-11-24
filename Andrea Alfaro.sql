@@ -30,6 +30,17 @@ EXEC HabitacionesPorHotel  'Hotel Don Bolivar'
 
 /*3. Retorna el comprobante de la reserva*/
 
+CREATE PROCEDURE ComprobantesPorReserva @ID int
+AS
+BEGIN
+    SELECT Reserva.ID, Reserva_date, Llegada_date, Salida_date,Comprobante.ID, Comprobante.Fecha, Comprobante.Monto
+    FROM Reserva
+    INNER JOIN Comprobante ON Reserva.ID = Comprobante.Reserva_ID
+    WHERE Reserva.ID = @ID 
+END
+
+EXEC ComprobantesPorReserva @ID 1
+
 /*informacion*/
 
 insert into Pais (ID, Nombre) values (1,'Peru')
