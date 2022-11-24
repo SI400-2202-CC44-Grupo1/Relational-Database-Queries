@@ -35,3 +35,7 @@ insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (3,'
 insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (4,'Los trabajadores son muy amables',4,1,4)
 insert into Resena(ID, Comentario, Puntuacion, Hotel_ID, Usuario_ID) values (5,'Hubo un problema con mi reserva...',3,1,5)
 
+insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) values(1,'Ejecutiva',1,1,1,500,3,'Libre',1)
+insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) values(2,'Matrimonial',1,1,1,800,2,'Ocupada',1)
+insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) values(3,'Simple',1,1,1,200,3,'Libre',1)
+insert into Habitacion(ID, Tipo, nCamas, TV, Wifi, Costo, Capacidad, Estado, Hotel_ID) values(4,'Royal',1,1,1,400,3,'Libre',1)
