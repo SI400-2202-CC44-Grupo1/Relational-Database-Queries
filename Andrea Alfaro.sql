@@ -11,7 +11,22 @@ BEGIN
     ORDER BY COUNT(Resena.ID) DESC
 END
 
+EXEC ReseñasPorHotel 'Hotel Don Bolivar'
+
 /*2. Retorta el número de habitaciones de un hotel*/
+
+CREATE PROCEDURE HabitacionesPorHotel @NombreHotel varchar(50)
+AS
+BEGIN
+    SELECT Hotel.Nombre, COUNT (Habitacion.ID) AS 'Numero de habitaciones'
+    FROM Hotel
+    INNER JOIN Habitacion ON Hotel.ID = Habitacion.Hotel_ID
+    WHERE Hotel.Nombre = @NombreHotel
+    GROUP BY Hotel.Nombre
+    ORDER BY COUNT(Habitacion.ID) DESC
+END
+
+EXEC HabitacionesPorHotel  'Hotel Don Bolivar'
 
 /*3. Retorna el comprobante de la reserva*/
 
